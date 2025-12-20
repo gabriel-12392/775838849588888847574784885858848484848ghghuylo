@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS კალკულატორი</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .calculator {
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 10px;
+        }
+
+        #display {
+            width: 100%;
+            height: 60px;
+            font-size: 2.5em;
+            text-align: right;
+            padding: 10px;
+            box-sizing: border-box;
+            border: none;
+            background-color: #eee;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .button {
+            height: 60px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .operator {
+            background-color: #f5912d;
+            color: white;
+        }
+
+        .operator:hover {
+            background-color: #e4811c;
+        }
+
+        .equal {
+            grid-column: span 2;
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .equal:hover {
+            background-color: #0b7dda;
+        }
+
+        .clear {
+            background-color: #d33;
+            color: white;
+        }
+
+        .clear:hover {
+            background-color: #c22;
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" id="display" disabled>
+    <div class="buttons">
+        <button class="button clear">C</button>
+        <button class="button operator">/</button>
+        <button class="button operator">*</button>
+        <button class="button operator">-</button>
+        <button class="button">7</button>
+        <button class="button">8</button>
+        <button class="button">9</button>
+        <button class="button operator">+</button>
+        <button class="button">4</button>
+        <button class="button">5</button>
+        <button class="button">6</button>
+        <button class="button operator">=</button>
+        <button class="button">1</button>
+        <button class="button">2</button>
+        <button class="button">3</button>
+        <button class="button">0</button>
+        <button class="button">.</button>
+    </div>
+</div>
+<a href="sheyfulda.htm">მომხმრებლის რეგისტრაცია</a>
+<br>
+
+<script>
+    const display = document.getElementById('display');
+    const buttons = document.querySelectorAll('.button');
+    let currentInput = '';
+    let operator = null;
+    let firstOperand = null;
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const buttonText = button.textContent;
+
+            if (buttonText >= '0' && buttonText <= '9' || buttonText === '.') {
+                currentInput += buttonText;
+                display.value = currentInput;
+            } else if (buttonText === 'C') {
+                currentInput = '';
+                operator = null;
+                firstOperand = null;
+                display.value = '';
+            } else if (buttonText === '=') {
+                if (operator && currentInput) {
+                    const secondOperand = parseFloat(currentInput);
+                    let result;
+                    switch (operator) {
+                        case '+':
+                            result = firstOperand + secondOperand;
+                            break;
+                        case '-':
+                            result = firstOperand - secondOperand;
+                            break;
+                        case '*':
+                            result = firstOperand * secondOperand;
+                            break;
+                        case '/':
+                            result = firstOperand / secondOperand;
+                            break;
+                    }
+                    display.value = result;
+                    currentInput = result.toString();
+                    operator = null;
+                    firstOperand = null;
+                }
+            } else { // Operator
+                if (currentInput) {
+                    firstOperand = parseFloat(currentInput);
+                    operator = buttonText;
+                    currentInput = '';
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

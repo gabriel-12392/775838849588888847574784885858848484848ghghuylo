@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>მთავარი</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>მოგესალმები პლაჟზე 🌞</h1>
+
+    <div id="userInfo">
+      <p><strong>სახელი:</strong> <span id="userName"></span></p>
+      <p><strong>გვარი:</strong> <span id="userSurname"></span></p>
+      <p><strong>პირადი ნომერი:</strong> <span id="userPID"></span></p>
+      <p><strong>ტელეფონის ნომერი:</strong> <span id="userPhone"></span></p>
+    </div>
+ <button class="btn" onclick="window.location.href='main.html '">უკან#</button>
+    <button class="btn" id="logoutBtn">გასვლა</button>
+  </div>
+
+  <script>
+    const phone = localStorage.getItem("loggedInUser");
+    const user = phone ? JSON.parse(localStorage.getItem(phone)) : null;
+
+    if (!user) {
+      // თუ ავტორიზაცია არ არსებობს, დაბრუნდი უკან
+      window.location.href = "index.html";
+    } else {
+      document.getElementById("userName").innerText = user.name;
+      document.getElementById("userSurname").innerText = user.surname;
+      document.getElementById("userPID").innerText = user.pid;
+      document.getElementById("userPhone").innerText = user.phone;
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

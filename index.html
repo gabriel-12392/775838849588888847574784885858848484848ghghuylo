@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>პლიაჟი</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="webite icon" type = "png" href="დღე.png">
+</head>
+<body>
+  <div class="container">
+    <h1>შენი პლიაჟი</h1>
+
+    <div id="loginSection">
+      <h2>შესვლა</h2>
+      <input type="text" id="loginPhone" placeholder="ტელეფონის ნომერი">
+      <input type="password" id="loginPassword" placeholder="პაროლი">
+      <button class="btn" id="loginBtn">შესვლა</button>
+    </div>
+<p id="status"></p>
+    <hr>
+
+    <div id="registerSection">
+      <h2>რეგისტრაცია</h2>
+      <input type="text" id="regName" placeholder="სახელი">
+      <input type="text" id="regSurname" placeholder="გვარი">
+      <input type="text" id="regPID" placeholder="პირადი ნომერი">
+      <input type="text" id="regPhone" placeholder="ტელეფონის ნომერი">
+      <input type="password" id="regPassword" placeholder="პაროლი">
+      <button class="btn" id="registerBtn">რეგისტრაცია</button>
+    </div>
+    <button class="btn" onclick="window.location.href='sheyfulda.htm'">თანამშრომლის რეჟიმი</button>
+
+    <p id="status"></p>
+
+    <script src="index.js"></script>
+  </div>
+</body>
+</html>

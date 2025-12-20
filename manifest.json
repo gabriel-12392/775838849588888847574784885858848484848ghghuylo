@@ -1,0 +1,15 @@
+{
+  "short_name": "ჩემი ",
+  "name": "ჩემი საიტის სრული სახელი",
+  "icons": [
+    {
+      "src": "დღე.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

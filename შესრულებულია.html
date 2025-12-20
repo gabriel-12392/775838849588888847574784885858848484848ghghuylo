@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <title>გადარიცხვა წარმატებით</title>
+  <style>
+    body {
+      background-color: #f6fff6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+
+    .circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: #4CAF50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pop 0.5s ease-out;
+    }
+
+    .circle i {
+      font-size: 60px;
+      color: white;
+    }
+
+    h1 {
+      margin-top: 20px;
+      color: #333;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .back-btn {
+      margin-top: 40px;
+      padding: 10px 20px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      background-color: #1976D2;
+    }
+    @media (max-width: 500px) {
+      .card-box {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="circle">
+    <i>&#10003;</i> <!-- ეს არის ✔ სიმბოლო -->
+  </div>
+  <h1> შესრულებულია</h1>
+  <button class="back-btn" onclick="window.location.href='main.html'">მთავარზე დაბრუნება</button>
+</body>
+</html>

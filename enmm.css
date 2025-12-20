@@ -1,0 +1,21 @@
+h1{
+color: forestgreen;
+text-align: center;
+
+
+}
+
+
+button{
+
+padding: 8px 15px;
+  background: #2daae1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+  font-weight: bold;
+  transition: background 0.3s;
+
+}

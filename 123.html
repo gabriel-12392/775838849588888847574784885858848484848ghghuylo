@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <div id="registerSection">
+      <h2>რეგისტრაცია</h2>
+      <input type="text" id="regName" placeholder="სახელი">
+      <input type="text" id="regSurname" placeholder="გვარი">
+      <input type="text" id="regPID" placeholder="პირადი ნომერი">
+      <input type="text" id="regPhone" placeholder="ტელეფონის ნომერი">
+      <input type="password" id="regPassword" placeholder="პაროლი">
+      <button class="btn" id="registerBtn">რეგისტრაცია</button>
+    </div>
+    <button class="btn" onclick="window.location.href='sheyfulda.htm'">თანამშრომლის რეჟიმი</button>
+
+    <p id="status"></p>
+
+
+    <script>// Helper to save user to localStorage
+function saveUserToLocalStorage(user) {
+  localStorage.setItem(user.phone, JSON.stringify(user));
+}
+
+// Helper to get user from localStorage
+function getUserFromLocalStorage(phone) {
+  return JSON.parse(localStorage.getItem(phone));
+}
+
+// Show messages on the page
+function showStatus(message, isError = false) {
+  const statusEl = document.getElementById("status");
+  statusEl.innerText = message;
+  statusEl.style.color = isError ? "red" : "green";
+}
+
+// რეგისტრაცია
+document.querySelector('#registerSection .btn').addEventListener('click', () => {
+  const name = document.getElementById("regName").value.trim();
+  const surname = document.getElementById("regSurname").value.trim();
+  const pid = document.getElementById("regPID").value.trim();
+  const phone = document.getElementById("regPhone").value.trim();
+  const password = document.getElementById("regPassword").value;
+
+  if (!name || !surname || !pid || !phone || !password) {
+    return showStatus("გთხოვ შეავსო ყველა ველი!", true);
+  }
+
+  if (getUserFromLocalStorage(phone)) {
+    return showStatus("მომხმარებელი უკვე არსებობს!", true);
+  }
+
+  const newUser = { name, surname, pid, phone, password };
+  saveUserToLocalStorage(newUser);
+
+  localStorage.setItem("loggedInUser", phone); // Save session
+  window.location.href = "sheyfulda.htm";
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>შენი პლიაჟი</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <div class="container">
+    <h1 style="color: coral;">შენი პლიაჟი</h1>
+    <p style="color: blue;">მოგესალმები, <span id="userName"></span>!</p>
+    <p style="color: green;">ბალანსი: <span id="userBalance">0</span> ₾</p>
+
+
+    <button class="btn" onclick="window.location.href='profile.html'">პროფილი</button>
+    <hr>
+
+    <p style="color: blue;">პლიაჟების სივრცე</p>
+
+    <div class="product-card">
+      <img src="დღე.png" class="product-image">
+      <h3 class="product-title">დღე</h3>
+      <p class="product-description">დასვენება • 1 საათი • 20₾</p>
+      <button class="btn" onclick="addToCart(20)">დამატება</button>
+    </div>
+
+    <div class="product-card">
+      <img src="ღამე.png" class="product-image">
+      <h3 class="product-title">ღამე</h3>
+      <p class="product-description">დასვენება • 1 საათი • 10₾</p>
+      <button class="btn" onclick="addToCart(10)">დამატება</button>
+    </div>
+
+    <div class="product-card">
+      <img src="ბავშვები.png" class="product-image">
+      <h3 class="product-title">ბავშვები</h3>
+      <p class="product-description">გართობა • 1 საათი • 10₾</p>
+      <button class="btn" onclick="addToCart(10)">დამატება</button>
+    </div>
+
+    <p style="color: blue;">სასმელი და საჭმელი</p>
+
+    <div class="product-card">
+      <img src="ლუდი.png" class="product-image">
+      <h3 class="product-title">ლუდი</h3>
+      <p class="product-description">5₾</p>
+      <button class="btn" onclick="addToCart(5)">დამატება</button>
+    </div>
+
+    <div class="product-card">
+      <img src="ნაყინი.png" class="product-image">
+      <h3 class="product-title">ნაყინი</h3>
+      <p class="product-description">1₾</p>
+      <button class="btn" onclick="addToCart(1)">დამატება</button>
+    </div>
+
+    <div class="product-card">
+      <img src="კოკა კოლა.png" class="product-image">
+      <h3 class="product-title">კოკა კოლა</h3>
+      <p class="product-description">5₾</p>
+      <button class="btn" onclick="addToCart(5)">დამატება</button>
+    </div>
+
+    <p>ჯამური ფასი: <span id="totalAmount">0</span> ₾</p>
+    <button class="btn" onclick="purchase()">ყიდვა</button>
+    <button class="btn" onclick="logout()">გასვლა</button>
+
+    <p id="message" style="margin-top: 10px;"></p>
+  </div>
+<script>
+  let total = 0;
+
+  const phone = localStorage.getItem("loggedInUser");
+  const user = phone ? JSON.parse(localStorage.getItem(phone)) : null;
+
+  if (!user) {
+    window.location.href = "index.html";
+  } else {
+    if (!user.balance) user.balance = 0;
+    document.getElementById("userName").innerText = user.name;
+    document.getElementById("userBalance").innerText = user.balance;
+    localStorage.setItem(phone, JSON.stringify(user));
+  }
+
+  function addToCart(amount) {
+    total += amount;
+    document.getElementById("totalAmount").innerText = total;
+    showMessage(`დამატებულია! ჯამი: ${total} ₾`, false);
+  }
+
+  function purchase() {
+    if (total === 0) {
+      showMessage("გთხოვ აირჩიე პროდუქტი", true);
+      return;
+    }
+
+    if (user.balance < total) {
+      showMessage("ბალანსი არ არის საკმარისი!", true);
+      return;
+    }
+
+    user.balance -= total;
+    localStorage.setItem(phone, JSON.stringify(user));
+    document.getElementById("userBalance").innerText = user.balance;
+    showMessage("შეძენა წარმატებით შესრულდა!", false);
+
+    setTimeout(() => {
+      window.location.href = "შესრულებულია.html";
+    }, 1000);
+  }
+
+  function addBalance(amount) {
+    user.balance += amount;
+    localStorage.setItem(phone, JSON.stringify(user));
+    document.getElementById("userBalance").innerText = user.balance;
+    showMessage(`დარიცხულია +${amount} ₾ ბალანსზე`, false);
+  }
+
+  function logout() {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "index.html";
+  }
+
+  function showMessage(text, isError) {
+    const msg = document.getElementById("message");
+    msg.innerText = text;
+    msg.style.color = isError ? "red" : "green";
+  }
+</script>
+
+</body>
+</html>
+

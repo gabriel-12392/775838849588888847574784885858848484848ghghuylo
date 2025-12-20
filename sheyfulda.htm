@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>თანამშრომლის რეჟიმი</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .result-card {
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: coral;">თანამშრომლის რეჟიმი</h1>
+        <button class="btn" onclick="window.location.href='main.html'">უკან დაბრუნება</button>
+         <button class="btn" onclick="window.location.href='123.html'">მომხმარებლის რეგისტრაცია</button>
+        <hr>
+
+        <p style="color: blue;">მომხმარებლის ძებნა</p>
+        <div class="search-section">
+            <input type="text" id="pidSearchInput" placeholder="შეიყვანეთ პირადი ნომერი" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <button class="btn" onclick="searchUser()">ძებნა</button>
+        </div>
+
+        <div id="userResult" class="result-card" style="display: none;">
+            <h3>მომხმარებლის ინფორმაცია</h3>
+            <p><strong>სახელი:</strong> <span id="resName"></span></p>
+            <p><strong>გვარი:</strong> <span id="resSurname"></span></p>
+            <p><strong>პირადი ნომერი:</strong> <span id="resPID"></span></p>
+            <p><strong>ტელეფონის ნომერი:</strong> <span id="resPhone"></span></p>
+            <p><strong>ბალანსი:</strong> <span id="resBalance">0</span> ₾</p>
+            
+            <hr>
+            <h4>პაროლის შეცვლა</h4>
+            <input type="password" id="newPasswordInput" placeholder="ახალი პაროლი" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <button class="btn" onclick="changePassword()">პაროლის შეცვლა</button>
+
+            <hr>
+            <h4>ბალანსის დამატება</h4>
+            <input type="number" id="addBalanceInput" placeholder="თანხა" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <button class="btn" onclick="addBalanceToUser()">თანხის დამატება</button>
+            
+            <hr>
+            <h4>ბალანსის ჩამოჭრა</h4>
+            <input type="number" id="deductBalanceInput" placeholder="თანხა" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <button class="btn" onclick="deductBalanceFromUser()">თანხის ჩამოჭრა</button>
+            <a href="shj.HTML">kalkulatori</a>
+            <p id="employeeMessage" style="margin-top: 10px;"></p>
+        </div>
+
+        <p id="searchMessage" style="margin-top: 10px;"></p>
+    </div>
+
+    <script>
+        let foundUserPhone = null;
+
+        function searchUser() {
+            const pid = document.getElementById("pidSearchInput").value.trim();
+            const searchMessageEl = document.getElementById("searchMessage");
+            const userResultEl = document.getElementById("userResult");
+            
+            userResultEl.style.display = 'none';
+            searchMessageEl.innerText = '';
+
+            if (!pid) {
+                searchMessageEl.innerText = "გთხოვთ შეიყვანოთ პირადი ნომერი.";
+                searchMessageEl.style.color = 'red';
+                return;
+            }
+
+            let foundUser = null;
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key !== 'loggedInUser') {
+                    const user = JSON.parse(localStorage.getItem(key));
+                    if (user && user.pid === pid) {
+                        foundUser = user;
+                        foundUserPhone = key;
+                        break;
+                    }
+                }
+            }
+
+            if (foundUser) {
+                document.getElementById("resName").innerText = foundUser.name;
+                document.getElementById("resSurname").innerText = foundUser.surname;
+                document.getElementById("resPID").innerText = foundUser.pid;
+                document.getElementById("resPhone").innerText = foundUser.phone;
+                document.getElementById("resBalance").innerText = foundUser.balance || 0;
+                userResultEl.style.display = 'block';
+                searchMessageEl.innerText = 'მომხმარებელი ნაპოვნია.';
+                searchMessageEl.style.color = 'green';
+            } else {
+                searchMessageEl.innerText = 'მომხმარებელი ვერ მოიძებნა.';
+                searchMessageEl.style.color = 'red';
+            }
+        }
+
+        function changePassword() {
+            if (!foundUserPhone) {
+                document.getElementById("employeeMessage").innerText = "გთხოვთ, ჯერ იპოვოთ მომხმარებელი.";
+                document.getElementById("employeeMessage").style.color = 'red';
+                return;
+            }
+
+            const newPassword = document.getElementById("newPasswordInput").value;
+            const employeeMessageEl = document.getElementById("employeeMessage");
+            
+            if (!newPassword) {
+                employeeMessageEl.innerText = "გთხოვთ შეიყვანოთ ახალი პაროლი.";
+                employeeMessageEl.style.color = 'red';
+                return;
+            }
+
+            const user = JSON.parse(localStorage.getItem(foundUserPhone));
+            user.password = newPassword;
+            localStorage.setItem(foundUserPhone, JSON.stringify(user));
+
+            employeeMessageEl.innerText = "პაროლი წარმატებით შეიცვალა!";
+            employeeMessageEl.style.color = 'green';
+            document.getElementById("newPasswordInput").value = "";
+        }
+
+        function addBalanceToUser() {
+            if (!foundUserPhone) {
+                document.getElementById("employeeMessage").innerText = "გთხოვთ, ჯერ იპოვოთ მომხმარებელი.";
+                document.getElementById("employeeMessage").style.color = 'red';
+                return;
+            }
+
+            const amountToAdd = parseFloat(document.getElementById("addBalanceInput").value);
+            const employeeMessageEl = document.getElementById("employeeMessage");
+
+            if (isNaN(amountToAdd) || amountToAdd <= 0) {
+                employeeMessageEl.innerText = "გთხოვთ შეიყვანოთ სწორი თანხა.";
+                employeeMessageEl.style.color = 'red';
+                return;
+            }
+
+            const user = JSON.parse(localStorage.getItem(foundUserPhone));
+            user.balance = (user.balance || 0) + amountToAdd;
+            localStorage.setItem(foundUserPhone, JSON.stringify(user));
+            
+            document.getElementById("resBalance").innerText = user.balance;
+            employeeMessageEl.innerText = `ბალანსს დაემატა ${amountToAdd} ₾. ახალი ბალანსი: ${user.balance} ₾`;
+            employeeMessageEl.style.color = 'green';
+            document.getElementById("addBalanceInput").value = "";
+        }
+        
+        function deductBalanceFromUser() {
+            if (!foundUserPhone) {
+                document.getElementById("employeeMessage").innerText = "გთხოვთ, ჯერ იპოვოთ მომხმარებელი.";
+                document.getElementById("employeeMessage").style.color = 'red';
+                return;
+            }
+
+            const amountToDeduct = parseFloat(document.getElementById("deductBalanceInput").value);
+            const employeeMessageEl = document.getElementById("employeeMessage");
+
+            if (isNaN(amountToDeduct) || amountToDeduct <= 0) {
+                employeeMessageEl.innerText = "გთხოვთ შეიყვანოთ სწორი თანხა.";
+                employeeMessageEl.style.color = 'red';
+                return;
+            }
+            
+            const user = JSON.parse(localStorage.getItem(foundUserPhone));
+            const currentBalance = user.balance || 0;
+            
+            if (currentBalance < amountToDeduct) {
+                employeeMessageEl.innerText = "ბალანსზე არ არის საკმარისი თანხა.";
+                employeeMessageEl.style.color = 'red';
+                return;
+            }
+
+            user.balance = currentBalance - amountToDeduct;
+            localStorage.setItem(foundUserPhone, JSON.stringify(user));
+            
+            document.getElementById("resBalance").innerText = user.balance;
+            employeeMessageEl.innerText = `ბალანსს ჩამოეჭრა ${amountToDeduct} ₾. ახალი ბალანსი: ${user.balance} ₾`;
+            employeeMessageEl.style.color = 'green';
+            document.getElementById("deductBalanceInput").value = "";
+        }
+    </script>
+</body>
+</html>

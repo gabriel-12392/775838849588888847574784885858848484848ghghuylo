@@ -1,0 +1,204 @@
+/* საერთო სტილები */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f8fc;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* კონტეინერი */
+.container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* სათაური */
+h1, h2, h3 {
+  text-align: center;
+  color: #1e88e5;
+}
+
+/* შეყვანის ველები */
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="tel"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* ღილაკები */
+.btn {
+  width: 100%;
+  background-color: #1e88e5;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #1565c0;
+}
+
+/* შეტყობინებების სტილი */
+.success {
+  color: green;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* პროფილის ბლოკები */
+.profile-info {
+  background-color: #f0f4fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.transaction-history {
+  background-color: #f9f9f9;
+  border-left: 4px solid #1e88e5;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+/* მობილურის მხარდაჭერა */
+@media (max-width: 480px) {
+  .container {
+    margin: 20px 15px;
+    padding: 20px;
+  }
+
+  .btn {
+    padding: 10px;
+    font-size: 15px;
+  }
+}
+.product-card {
+  width: 220px;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  background: white;
+  margin: 10px;
+  display: inline-block;
+}
+
+.product-image {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-title {
+  font-size: 18px;
+  margin: 10px 0 5px;
+}
+
+.product-description {
+  font-size: 14px;
+  color: #555;
+}
+
+.btn {
+  padding: 8px 15px;
+  background: #2daae1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #178ec0;
+}
+img{
+
+height: 300px;
+width: 100%
+
+
+
+}
+
+
+
+h4 {
+
+text-align: center;
+
+color: #1565c0;
+
+
+
+}
+header{
+
+text-align: center;
+
+color: darkorange;
+
+
+
+}
+button{
+border-radius: 50px;
+
+
+
+
+
+}
+/* 📱 ტელეფონის ხედისთვის (responsive) */
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .card {
+        padding: 15px;
+        border-radius: 12px;
+      }
+
+      input, button {
+        font-size: 1em;
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 1.4em;
+      }
+    }
